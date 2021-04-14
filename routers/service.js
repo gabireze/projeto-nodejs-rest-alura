@@ -1,4 +1,4 @@
-const ServiceController = require("../controllers/service")
+const ServiceController = require('../controllers/service');
 
 module.exports = app => {
   app.get('/service', ServiceController.read);
