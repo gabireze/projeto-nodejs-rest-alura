@@ -2,9 +2,9 @@ const OrderService = require('../services/order')
 
 class OrderController {
 
-  async insert(request, response, next) {
+  async insertOrder(request, response, next) {
     const { body } = request;
-    const result = await OrderService.insert(body, response);
+    const result = await OrderService.insertOrder(body, response);
   };
 
   async getOrders(request, response, next) {
@@ -20,6 +20,11 @@ class OrderController {
     const orderId = request.params.id;
     const updatedValues = request.body;
     const result = await OrderService.patchOrderById(orderId, updatedValues, response);
+  };
+
+  async deleteOrderById(request, response, next) {
+    const orderId = request.params.id;
+    const result = await OrderService.deleteOrderById(orderId, response);
   };
 
 };

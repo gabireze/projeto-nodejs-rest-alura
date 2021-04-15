@@ -4,7 +4,7 @@ const connection = require('../infrastructure/connection');
 const Order = require('../models/order');
 
 class OrderService {
-  async insert(body, response) {
+  async insertOrder(body, response) {
     const order = new Order(body);
     const createdAt = moment().format('YYYY-MM-DD HH:MM:SS');
     const bodyDate = moment(body.date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS');
@@ -32,7 +32,7 @@ class OrderService {
       response.status(400).json(errors);
     } else {
       const datedOrder = { ...order, createdAt, date: bodyDate };
-      const result = await OrderDAO.insert(datedOrder, response);
+      const result = await OrderDAO.insertOrder(datedOrder, response);
     }
   };
 
@@ -46,6 +46,10 @@ class OrderService {
 
   async patchOrderById(orderId, updatedValues, response) {
     const result = await OrderDAO.patchOrderById(orderId, updatedValues, response);
+  };
+
+  async deleteOrderById(orderId, response) {
+    const result = await OrderDAO.deleteOrderById(orderId, response);
   };
 
 }

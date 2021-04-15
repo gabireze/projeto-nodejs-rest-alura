@@ -1,14 +1,14 @@
 const connection = require('../infrastructure/connection');
 const moment = require('moment');
 class OrderDAO {
-  async insert(order, response) {
+  async insertOrder(order, response) {
     const sql = 'INSERT INTO Orders SET ?';
 
     connection.query(sql, order, (error, results) => {
       if (error) {
         return response.status(400).json(error);
       } else {
-        response.status(201).json(results);
+        response.status(201).json(order);
       };
     });
   };
@@ -51,7 +51,19 @@ class OrderDAO {
       if (error) {
         response.status(400).json(error);
       } else {
-        response.status(200).json(results);
+        response.status(200).json({ ...updatedValues, orderId });
+      };
+    });
+  };
+
+  async deleteOrderById(orderId, response) {
+    const sql = 'DELETE FROM Orders WHERE id=?';
+
+    connection.query(sql, orderId, (error, results) => {
+      if (error) {
+        response.status(400).json(error);
+      } else {
+        response.status(200).json({ orderId });
       };
     });
   };
