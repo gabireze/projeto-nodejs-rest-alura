@@ -9,4 +9,5 @@ Faça esse curso de Node.JS e:
 - Envie erros descritivos para o seu usuário
 
 Link para o curso: https://cursos.alura.com.br/course/node-rest-api
+
 Certificado: https://cursos.alura.com.br/user/gabireze/course/node-rest-api/certificate
