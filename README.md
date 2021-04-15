@@ -8,4 +8,5 @@ Faça esse curso de Node.JS e:
 - Valide os dados antes de enviar para o banco de dados
 - Envie erros descritivos para o seu usuário
 
-Link: https://cursos.alura.com.br/course/node-rest-api
+Link para o curso: https://cursos.alura.com.br/course/node-rest-api
+Certificado: https://cursos.alura.com.br/user/gabireze/course/node-rest-api/certificate
