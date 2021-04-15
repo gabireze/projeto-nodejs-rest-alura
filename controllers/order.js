@@ -16,6 +16,12 @@ class OrderController {
     const result = await OrderService.getOrderById(orderId, response);
   };
 
+  async patchOrderById(request, response, next) {
+    const orderId = request.params.id;
+    const updatedValues = request.body;
+    const result = await OrderService.patchOrderById(orderId, updatedValues, response);
+  };
+
 };
 
 module.exports = new OrderController;

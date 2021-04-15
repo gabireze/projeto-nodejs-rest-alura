@@ -44,6 +44,10 @@ class OrderService {
     const result = await OrderDAO.getOrderById(orderId, response);
   };
 
+  async patchOrderById(orderId, updatedValues, response) {
+    const result = await OrderDAO.patchOrderById(orderId, updatedValues, response);
+  };
+
 }
 
 module.exports = new OrderService;
