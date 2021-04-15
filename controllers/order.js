@@ -4,7 +4,7 @@ class OrderController {
 
   async insert(request, response, next) {
     const { body } = request;
-    const result = await OrderService.insert(body);
+    const result = await OrderService.insert(body, response);
   };
 
   async read(request, response, next) {

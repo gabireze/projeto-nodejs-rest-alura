@@ -1,14 +1,14 @@
 const connection = require('../infrastructure/connection');
 
 class OrderDAO {
-  async insert(order) {
+  async insert(order, response) {
     const sql = 'INSERT INTO Services SET ?';
 
     connection.query(sql, order, (error, results) => {
       if (error) {
-        console.log(error);
+        return response.status(400).json(error);
       } else {
-        console.log(results);
+        response.status(201).json(results);
       };
     });
   };
