@@ -1,5 +1,6 @@
 const moment = require('moment');
 const OrderDAO = require('../daos/order');
+const connection = require('../infrastructure/connection');
 const Order = require('../models/order');
 
 class OrderService {
@@ -33,8 +34,16 @@ class OrderService {
       const datedOrder = { ...order, createdAt, date: bodyDate };
       const result = await OrderDAO.insert(datedOrder, response);
     }
-
   };
-};
+
+  async getOrders(response) {
+    const result = await OrderDAO.getOrders(response);
+  };
+
+  async getOrderById(orderId, response) {
+    const result = await OrderDAO.getOrderById(orderId, response);
+  };
+
+}
 
 module.exports = new OrderService;
