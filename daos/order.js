@@ -1,5 +1,6 @@
 const connection = require('../infrastructure/connection');
 const moment = require('moment');
+
 class OrderDAO {
   async insertOrder(order) {
     return new Promise((resolve, reject) => {
@@ -43,21 +44,22 @@ class OrderDAO {
     });
   };
 
-  async patchOrderById(orderId, updatedValues, response) {
-    const sql = 'UPDATE Orders SET ? WHERE id=?';
+  async patchOrderById(orderId, updatedValues) {
+    return new Promise((resolve, reject) => {
+      const sql = 'UPDATE Orders SET ? WHERE id=?';
+      const { date } = updatedValues;
 
-    const { date } = updatedValues;
+      if (date) {
+        updatedValues.date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS');
+      }
 
-    if (date) {
-      updatedValues.date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS');
-    }
-
-    connection.query(sql, [updatedValues, orderId], (error, results) => {
-      if (error) {
-        response.status(400).json(error);
-      } else {
-        response.status(200).json({ ...updatedValues, orderId });
-      };
+      connection.query(sql, [updatedValues, orderId], (error, results) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(results);
+        };
+      });
     });
   };
 

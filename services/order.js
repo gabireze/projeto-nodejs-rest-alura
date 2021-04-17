@@ -69,9 +69,13 @@ class OrderService {
     return results && results.length > 0 && results[0] !== {};
   }
 
-
-  async patchOrderById(orderId, updatedValues, response) {
-    const result = await OrderDAO.patchOrderById(orderId, updatedValues, response);
+  async patchOrderById(orderId, updatedValues) {
+    try {
+      const result = await OrderDAO.patchOrderById(orderId, updatedValues);
+      return result;
+    } catch (error) {
+      throw error;
+    };
   };
 
   async deleteOrderById(orderId) {
@@ -89,8 +93,7 @@ class OrderService {
 
   isValidDeletedResults(results) {
     return results && results.affectedRows > 0;
-  }
-
-}
+  };
+};
 
 module.exports = new OrderService;

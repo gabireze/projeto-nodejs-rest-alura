@@ -2,7 +2,6 @@ const order = require('../daos/order');
 const OrderService = require('../services/order')
 
 class OrderController {
-
   async insertOrder(request, response, next) {
     try {
       const { body } = request;
@@ -35,9 +34,15 @@ class OrderController {
   };
 
   async patchOrderById(request, response, next) {
-    const orderId = request.params.id;
-    const updatedValues = request.body;
-    const result = await OrderService.patchOrderById(orderId, updatedValues, response);
+    try {
+      const orderId = request.params.id;
+      const updatedValues = request.body;
+      await OrderService.patchOrderById(orderId, updatedValues);
+      return response.status(200).json(`Campo(s) do registro com id \'${orderId}\' foi atualizado`);
+    } catch (error) {
+      return response.status(400).json(error);
+    };
+
   };
 
   async deleteOrderById(request, response, next) {
@@ -49,7 +54,6 @@ class OrderController {
       return response.status(400).json(error.message);
     };
   };
-
 };
 
 module.exports = new OrderController;
