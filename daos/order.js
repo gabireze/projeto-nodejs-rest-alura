@@ -1,15 +1,17 @@
 const connection = require('../infrastructure/connection');
 const moment = require('moment');
 class OrderDAO {
-  async insertOrder(order, response) {
-    const sql = 'INSERT INTO Orders SET ?';
+  async insertOrder(order) {
+    return new Promise((resolve, reject) => {
+      const sql = 'INSERT INTO Orders SET ?';
 
-    connection.query(sql, order, (error, results) => {
-      if (error) {
-        return response.status(400).json(error);
-      } else {
-        response.status(201).json(order);
-      };
+      connection.query(sql, order, (error, results) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(results);
+        };
+      });
     });
   };
 
@@ -59,15 +61,17 @@ class OrderDAO {
     });
   };
 
-  async deleteOrderById(orderId, response) {
-    const sql = 'DELETE FROM Orders WHERE id=?';
+  async deleteOrderById(orderId) {
+    return new Promise((resolve, reject) => {
+      const sql = 'DELETE FROM Orders WHERE id=?';
 
-    connection.query(sql, orderId, (error, results) => {
-      if (error) {
-        response.status(400).json(error);
-      } else {
-        response.status(200).json({ orderId });
-      };
+      connection.query(sql, [orderId], (error, results) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(results);
+        };
+      });
     });
   };
 };

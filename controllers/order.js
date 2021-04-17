@@ -4,8 +4,15 @@ const OrderService = require('../services/order')
 class OrderController {
 
   async insertOrder(request, response, next) {
-    const { body } = request;
-    const result = await OrderService.insertOrder(body, response);
+    try {
+      const { body } = request;
+      const result = await OrderService.insertOrder(body);
+      const { insertId: id } = result;
+      const resultWithId = { ...body, id }
+      return response.status(200).json(resultWithId);
+    } catch (error) {
+      return response.status(400).json(error);
+    };
   };
 
   async getOrders(request, response, next) {
@@ -34,8 +41,13 @@ class OrderController {
   };
 
   async deleteOrderById(request, response, next) {
-    const orderId = request.params.id;
-    const result = await OrderService.deleteOrderById(orderId, response);
+    const { params: { id: orderId } } = request;
+    try {
+      const result = await OrderService.deleteOrderById(orderId);
+      return response.status(200).json({ ...`Registro com id \'${orderId}\' foi apagado`, result });
+    } catch (error) {
+      return response.status(400).json(error.message);
+    };
   };
 
 };
