@@ -13,28 +13,31 @@ class OrderDAO {
     });
   };
 
-  async getOrders(response) {
-    const sql = 'SELECT * FROM Orders';
+  async getOrders() {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT * FROM Orders';
 
-    connection.query(sql, (error, results) => {
-      if (error) {
-        response.status(400).json(error);
-      } else {
-        response.status(200).json(results);
-      };
+      connection.query(sql, (error, results) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(results);
+        };
+      });
     });
   };
 
-  async getOrderById(orderId, response) {
-    const sql = `SELECT * FROM Orders WHERE id=${orderId}`;
+  async getOrderById(orderId) {
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT * FROM Orders WHERE id=${orderId}`;
 
-    connection.query(sql, (error, results) => {
-      const order = results[0];
-      if (error) {
-        response.status(400).json(error);
-      } else {
-        response.status(200).json(order);
-      };
+      connection.query(sql, (error, results) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(results);
+        };
+      });
     });
   };
 

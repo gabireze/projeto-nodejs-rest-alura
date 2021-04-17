@@ -36,13 +36,35 @@ class OrderService {
     }
   };
 
-  async getOrders(response) {
-    const result = await OrderDAO.getOrders(response);
+  async getOrders() {
+    try {
+      const results = await OrderDAO.getOrders();
+      if (this.isValidResults(results)) {
+        return results;
+      } else {
+        throw new Error('Nenhum registro foi encontrado');
+      };
+    } catch (error) {
+      throw error;
+    };
   };
 
-  async getOrderById(orderId, response) {
-    const result = await OrderDAO.getOrderById(orderId, response);
+  async getOrderById(orderId) {
+    try {
+      const results = await OrderDAO.getOrderById(orderId);
+      if (this.isValidResults(results)) {
+        return results[0];
+      } else {
+        throw new Error('Registro não encontrado');
+      };
+    } catch (error) {
+      throw error;
+    };
   };
+
+  isValidResults(results) {
+    return results && results.length > 0 && results[0] !== {};
+  }
 
   async patchOrderById(orderId, updatedValues, response) {
     const result = await OrderDAO.patchOrderById(orderId, updatedValues, response);
