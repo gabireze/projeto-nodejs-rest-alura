@@ -1,6 +1,7 @@
 const moment = require('moment');
 const OrderDAO = require('../daos/order');
 const Order = require('../models/order');
+const OrderUtil = require('../utils/order');
 
 class OrderService {
   async insertOrder(body, response) {
@@ -42,7 +43,7 @@ class OrderService {
   async getOrders() {
     try {
       const results = await OrderDAO.getOrders();
-      if (this.isValidGetResults(results)) {
+      if (OrderUtil.isValidGetResults(results)) {
         return results;
       } else {
         throw new Error('Nenhum registro foi encontrado');
@@ -55,7 +56,7 @@ class OrderService {
   async getOrderById(orderId) {
     try {
       const results = await OrderDAO.getOrderById(orderId);
-      if (this.isValidGetResults(results)) {
+      if (OrderUtil.isValidGetResults(results)) {
         return results[0];
       } else {
         throw new Error('Registro não encontrado');
@@ -64,10 +65,6 @@ class OrderService {
       throw error;
     };
   };
-
-  isValidGetResults(results) {
-    return results && results.length > 0 && results[0] !== {};
-  }
 
   async patchOrderById(orderId, updatedValues) {
     try {
@@ -81,7 +78,7 @@ class OrderService {
   async deleteOrderById(orderId) {
     try {
       const results = await OrderDAO.deleteOrderById(orderId);
-      if (this.isValidDeletedResults(results)) {
+      if (OrderUtil.isValidDeletedResults(results)) {
         return results;
       } else {
         throw new Error('Nenhum registro foi deletado');
@@ -89,10 +86,6 @@ class OrderService {
     } catch (error) {
       throw error;
     };
-  };
-
-  isValidDeletedResults(results) {
-    return results && results.affectedRows > 0;
   };
 };
 

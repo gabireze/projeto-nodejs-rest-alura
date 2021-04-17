@@ -42,7 +42,6 @@ class OrderController {
     } catch (error) {
       return response.status(400).json(error);
     };
-
   };
 
   async deleteOrderById(request, response, next) {
